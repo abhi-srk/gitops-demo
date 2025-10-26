@@ -11,3 +11,4 @@ helmCharts:
     version: "22.1.1"
     repo: https://charts.bitnami.com/bitnami
     valuesFile: ./values.yaml
+    skipTLSVerify: true
