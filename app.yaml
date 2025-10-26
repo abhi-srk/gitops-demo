@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kustomize-helm-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/abhi-srk/gitops-demo.git
+    targetRevision: master
+    path: kustomize
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
