@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+  - name: nginx
+    releaseName: nginx
+    namespace: demo
+    version: 15.12.0
+    repo: https://charts.bitnami.com/bitnami
+    valuesFile: ./nginx/values.yaml
+    includeCRDs: true
+    # sync-wave ensures nginx goes first
+    additionalAnnotations:
+      argocd.argoproj.io/sync-wave: "0"
+
+  - name: redis
+    releaseName: redis
+    namespace: demo
+    version: 18.7.0
+    repo: https://charts.bitnami.com/bitnami
+    valuesFile: ./redis/values.yaml
+    includeCRDs: true
+    # sync-wave ensures redis goes after nginx
+    additionalAnnotations:
+      argocd.argoproj.io/sync-wave: "1"
+
